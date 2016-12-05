@@ -51,7 +51,7 @@ module.exports = function windows () {
        * 
        */
 
-  var _electronAPI = require('electron');
+  var _electronAPI = require( 'electron' );
   var _BrowserWindow = _electronAPI.BrowserWindow;
   
     /** 
@@ -62,19 +62,19 @@ module.exports = function windows () {
      * 
      * 
      */
-  function createWindow(_url, _config){
+  function createWindow( _url, _config ) {
 
 	 // Create the browser window.
-     var _window = new _BrowserWindow(_config); 
+     var _window = new _BrowserWindow( _config ); 
 
      // the url of the view
-      _window.loadURL(_url);
+      _window.loadURL( _url );
 	 
 	  // Open the DevTools for debuggin purposes.
 	 _window.webContents.openDevTools();
 
 	  // Emitted when the window is closed.
-	  _window.on('closed', function () {
+	  _window.on( 'closed', function () {
 	    // Dereference the window object, usually you would store windows
 	    // in an array if your app supports multi windows, this is the time
 	    // when you should delete the corresponding element.
@@ -88,7 +88,7 @@ module.exports = function windows () {
 
 
 
-   return{
+   return {
     /** 
      * 
      * Description for the method.
@@ -97,7 +97,7 @@ module.exports = function windows () {
      * 
      * @return a basic window object
      */
-     window:function (url, config) {    	 
+     window:function ( url, config ) {    	 
 		   /**
 		   * 
 		   * @namespace {javascript-object} config - javascript object with the basic window characteristics
@@ -108,18 +108,18 @@ module.exports = function windows () {
 		   */
 		   var _config= config || {
 
-		   							width:800
-		   						  , height:600
-		   						  , fullscreen: true
-		   						  , autoHideMenuBar: true
-		   						  , webPreferences: {devTools: true}
+		   							width:800,
+		   						    height:600,
+		   						    fullscreen: true,
+		   						    autoHideMenuBar: true,
+		   						    webPreferences: { devTools: true }
 
 		   							};
 
 		   var _url= url || 'file://' + $ + '{__dirname}/app/index.html';
 
 
-     	   var main= createWindow(_url, _config); 
+     	   var main= createWindow( _url, _config ); 
 
      	return main;
 

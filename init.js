@@ -119,7 +119,7 @@
      *
      * 
      */
-     var core= require('./js/core/core.js')();
+     var core= require( './js/core/core.js' )();
 
     
 

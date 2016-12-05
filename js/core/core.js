@@ -100,10 +100,10 @@
  * Module that implements ovni's core app.
  * @module core
  *
- * @param {object} configurationObject - object that contains all configuration options
+ * @param { object } configurationObject - object that contains all configuration options
  *
  */
-module.exports = function core (configurationObject) {
+module.exports = function core ( configurationObject ) {
     /** 
        * 
        * 
@@ -113,7 +113,7 @@ module.exports = function core (configurationObject) {
        * 
        */
 
-  var electronAPI = require('electron');
+  var electronAPI = require( 'electron' );
   var app = electronAPI.app;
 
    /**
@@ -125,7 +125,7 @@ module.exports = function core (configurationObject) {
    var _config = configurationObject || {};
 
 
-   return{
+   return {
     /** 
      * 
      * This function intis the core functionality, used to start the core.
@@ -136,7 +136,7 @@ module.exports = function core (configurationObject) {
      */
      start:function () {
         
-      app.on('ready', function (){ 
+      app.on( 'ready', function () { 
 
      //  the main process
      // -------------------------------- //
@@ -147,8 +147,8 @@ module.exports = function core (configurationObject) {
            * 
            * 
            */
-          var windowsAPI = require('./windows.js')();
-          mainWindow = windowsAPI.window("https://github.com");
+          var windowsAPI = require ( './windows.js' )();
+          mainWindow = windowsAPI.window( "https://github.com" );
    
     
       // end main porcess 
@@ -158,16 +158,15 @@ module.exports = function core (configurationObject) {
 
     // Quit when all windows are closed.
     // --------------------------------- //
-    app.on('window-all-closed', function () {
+    app.on( 'window-all-closed', function () {
       // On OS X it is common for applications and their menu bar
       // to stay active until the user quits explicitly with Cmd + Q
-      if (process.platform !== 'darwin') {
-        app.quit();
-      }
+      if ( process.platform !== 'darwin' )  app.quit();
+      
     });
 
 
-    console.log(_config);
+    console.log( _config );
 
 
       }
