@@ -1,0 +1,53 @@
+{
+   "name": "ovni",
+  "version": "0.0.1",
+  "description": "Home entertainment system based on web tecnologies",
+  "main": "init.js",
+  "scripts": {
+    "test": "grunt test --verbose"
+  },
+  "keywords": [
+    "Home",
+    "theater",
+    "ovni",
+    "entertainment",
+    "system"
+  ],
+  "author": "Lucas_C/llucbrell",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "grunt-banner": "^0.6.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-file-creator": "^0.1.3",
+    "grunt-jscs": "^3.0.1",
+    "grunt-jsdoc": "^2.1.0",
+    "grunt-mkdir": "^1.0.0",
+    "grunt-shell": "^1.3.1",
+    "grunt-string-replace": "^1.3.0",
+    "grunt": "^1.0.1",
+    "grunt-banner": "^0.6.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-file-creator": "^0.1.3",
+    "grunt-jscs": "^3.0.1",
+    "grunt-jsdoc": "^2.1.0",
+    "grunt-mkdir": "^1.0.0",
+    "grunt-shell": "^1.3.1",
+    "grunt-string-replace": "^1.3.1",
+    "electron-prebuilt": "^1.4.10"
+  },
+  "dependencies": {
+    
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/llucbrell/ovni.git"
+  },
+  "bugs": {
+    "url": "https://github.com/llucbrell/workflow-lib/issues"
+  },
+  "homepage": "https://github.com/llucbrell/workflow-lib#readme"
+}
