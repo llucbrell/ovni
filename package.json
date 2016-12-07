@@ -33,10 +33,8 @@
     "grunt-string-replace": "^1.3.1"
   },
   "dependencies": {
-    "check-update-github": "0.0.4",
     "compare-semver": "^1.1.0",
-    "latest": "^0.2.0",
-    "request": "^2.79.0"
+    "latest": "^0.2.0"
   },
   "repository": {
     "type": "git",
