@@ -109,12 +109,13 @@ module.exports = function core ( configurationObject ) {
        * 
        * @require electron - electron API.
        * @require electron.app - module to control application life activity
-       * 
+       * @require loader - module for loading core tools
        * 
        */
-
   var electronAPI = require( 'electron' );
   var app = electronAPI.app;
+  var loader = require( './loader.js' )();
+  
 
    /**
    * 
@@ -134,26 +135,48 @@ module.exports = function core ( configurationObject ) {
      * 
      * 
      */
-     start:function () {
-        
+     start:function () { 
+    // define de tools container befor running the loader
+    var tools;
+    /** 
+     * 
+     * Run after correct tools loads
+     * @method loadtoolsOk
+     *
+     * 
+     * 
+     */   
+    var loadtoolsOk = function () {
+      // define the actions after tools loading 
+
+
+      // use windows tool to build a window
+      tools.windows.window( "https://github.com" );
+      console.log( tools );
+      console.log( _config );
+
+
+
+
+    }; 
+
+    // when the electron library it's ready executes
       app.on( 'ready', function () { 
 
      //  the main process
      // -------------------------------- //
-
-          /** 
-           * 
-           * @require windows - module tat manages app windows
-           * 
-           * 
-           */
-          var windowsAPI = require ( './windows.js' )();
-          mainWindow = windowsAPI.window( "https://github.com" );
-   
     
-      // end main porcess 
-      // ------------------------------ //    
-    });   
+
+  // start loading tools when the library is ready
+  tools = loader.path( './tools', loadtoolsOk );
+  
+    
+       
+    });// end main porcess 
+      // ------------------------------ //   
+
+
+
 
 
     // Quit when all windows are closed.
@@ -163,19 +186,11 @@ module.exports = function core ( configurationObject ) {
       // to stay active until the user quits explicitly with Cmd + Q
       if ( process.platform !== 'darwin' )  app.quit();
       
-    });
+    }); 
 
 
-    console.log( _config );
-
-
-      }
-
-  
-
-
-
-     };
+    }
+  };
 }; 
 
 

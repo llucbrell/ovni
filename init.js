@@ -121,11 +121,10 @@
      * @require compare-semver - compare the semantic versions
      */
      var core= require( './js/core/core.js' )();
-     var latest = require('latest');
-     var pkg = require('./package.json');
-     var compare = require('compare-semver');
-    
-
+     var latest = require( 'latest' );
+     var pkg = require( './package.json' );
+     var compare = require( 'compare-semver' ); 
+ 
     // load the config file
 
    // generate configuration object
@@ -135,24 +134,24 @@
   // iniciate the app
      core.start(); 
 
+     //leedir('./');
 
     // check for a new software version
     var lastVersion;
      
   // call npm and get the last semVer of the app
-  latest('audrey-two', function(err, v) {
+  latest( 'audrey-two', function ( err, v ) {
   // asign the version to one variable (more readable)
   lastVersion = v; 
   // the running version of the app
   currentVersion = pkg.version;
   // put the versions in the array
-  var versions = [ lastVersion, currentVersion];
+  var versions = [ lastVersion, currentVersion ];
   // compare the versions
-  var maxSemver = compare.max(versions);
+  var maxSemver = compare.max( versions );
   //call the core if we need to update the app
-  if (maxSemver === lastVersion){
-    console.log("update please");
-  }
+  if ( maxSemver === lastVersion ) console.log( "update please" );
+
 
 });
 
