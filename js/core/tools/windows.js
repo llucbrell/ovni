@@ -37,7 +37,6 @@
  * Module that creates and manage windows.
  * @module windows
  *
- * @param {object} configWin - javascript object with windows configuration.
  *
  */
 module.exports = function windows () {

@@ -155,7 +155,8 @@ module.exports = function core ( configurationObject ) {
       console.log( tools );
       console.log( _config );
 
-
+      // use update tool to check for updates
+      tools.update.check();
 
 
     }; 

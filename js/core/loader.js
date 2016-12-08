@@ -48,6 +48,8 @@ module.exports = function loader () {
        * 
        */
     var _filer = require( 'fs' );
+    var _path;
+    var _userpath;
     var _loadedObject = { };
     var _pathFiles = [ ];
   
@@ -55,15 +57,14 @@ module.exports = function loader () {
     function myLoad ( callback ) {
         _pathFiles.forEach( function ( element ) {
           console.log( "loaded " + element );
-            _loadedObject[ element.substring( 0, element.length-3 ) ] = require( __dirname + '/' +element )();
+            _loadedObject[ element.substring( 0, element.length-3 ) ] = require( _path + '/' + element )();
       });
          callback();
     }
    // Stores all the file paths inside an array.   
-  function leedir ( path, callback ) {
-    console.log( callback );
+  function leedir ( callback ) {
    
-  _filer.readdir( path,  function ( err, files ) {
+  _filer.readdir( _path,  function ( err, files ) {
       if ( err ) {
          // retuns an error object
         var error = { msg: "Loader can't read folder", data: err };
@@ -98,11 +99,11 @@ module.exports = function loader () {
        * @namespace {string} userPath - the folder's path for the modules to load
        * @todo Implement error handling
        */
-
+       _userpath = userPath;
        if ( userPath[ 0 ] === '.' ) userPath = userPath.substring( 1, userPath.length );
-              
+            _path = __dirname + userPath;  
         // fullfill the _loadedObject
-        leedir( __dirname + userPath, callback );
+        leedir(  callback );
         // return that object
         
 
