@@ -134,8 +134,8 @@ module.exports = function windows () {
 		   							};
 
         // set the default view or skin            
-       if ( !ovniJSON.skin ) _url= 'file://${'+ __dirname +'}/../../../views/main.html';
-       else _url = 'file://${'+ __dirname + '}/../../../' + ovniJSON.skin;
+       if ( !ovniJSON.skin ) _url= 'file://${' + __dirname +'}/../../../views/main.html';
+       else _url = 'file://${'+ __dirname + '}/../../../' + ovniJSON.skin.html;
 
        console.log(_url)
 
@@ -171,7 +171,9 @@ module.exports = function windows () {
 
                     };
 
-       var _url= url || 'file://' + $ + '{__dirname}/app/index.html';
+     // set the default view or skin            
+       if ( !ovniJSON.skin ) _url=  url ||  'file://${' + __dirname +'}/../../../views/main.html';
+       else _url = url || 'file://${' + __dirname + '}/../../../' + ovniJSON.skin.html;
 
 
        var main= createWindow( _url, _config ); 

@@ -1,3 +1,6 @@
 {
-"skin": "views/skin/skin.html"
+"skin": { 
+	"html": "views/skin/skin.html",
+	"css": "views/css/skin.css"
+	}
 }
