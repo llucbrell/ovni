@@ -49,8 +49,8 @@ module.exports = function windows () {
        * @require ovni.json - configuration file
        * 
        */
-
   var _BrowserWindow = require( 'electron' ).BrowserWindow;
+  var ovniJSON = require('../../../ovni.json')
      /** 
        * @namespace {javascript-object} _windows - all the windows active in the sesion  
        */
@@ -113,7 +113,8 @@ module.exports = function windows () {
      * 
      * 
      */
-     start:function () {    	 
+     start:function () { 
+     var _url;   	 
 		   /**
 		   * 
 		   * @namespace {javascript-object} config - javascript object with the basic window characteristics
@@ -128,16 +129,17 @@ module.exports = function windows () {
 		   						    autoHideMenuBar: true,
                       show: false,
                       fullscreen: true,
-		   						    webPreferences: { devTools: false },
+		   						    webPreferences: { devTools: true},
                       ovnid: 00
-
 		   							};
 
-		   var _url= 'file://${__dirname}/views/main.html';
+        // set the default view or skin            
+       if ( !ovniJSON.skin ) _url= 'file://${'+ __dirname +'}/../../../views/main.html';
+       else _url = 'file://${'+ __dirname + '}/../../../' + ovniJSON.skin;
 
+       console.log(_url)
 
      	 var main= createWindow( _url, _config ); 
-     	// return main;
 
      	},
 
@@ -173,8 +175,6 @@ module.exports = function windows () {
 
 
        var main= createWindow( _url, _config ); 
-
-      return main;
 
       },
 
@@ -224,6 +224,7 @@ module.exports = function windows () {
         delete _windowStack[ windowId ];
           
       }
+
 
 
 

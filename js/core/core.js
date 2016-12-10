@@ -161,7 +161,7 @@ console.log( _config );
 
         try {
             // try to execut all the services if exist the start method
-            if ( services[property].start ) services [ property ].start();
+            if ( services[property].start && services[property] !== 'views') services [ property ].start();
             else console.log( "ups");
         }
         catch (err) {
@@ -177,7 +177,7 @@ console.log( _config );
             console.log ( err );
 
           }
-          else console.log ("ups"+ err );
+          else console.log ("ups -"+ err );
 
         }
       
