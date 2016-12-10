@@ -59,7 +59,7 @@
                  8    C                       License  >      GPL-3.0
                  ;Ct                          Date     >      2016-12-05
 
-       Home entertainment system based on web tecnologies
+       Home theater software based on web tecnologies
  HHEADER*/
 
 /*
@@ -136,8 +136,13 @@ module.exports = function core ( configurationObject ) {
      * 
      */
      start:function () { 
+
+      //  functions definitions
+     // -------------------------------- //
+    
+
     // define de tools container befor running the loader
-    var tools;
+    var tools, services;
     /** 
      * 
      * Run after correct tools loads
@@ -151,25 +156,46 @@ module.exports = function core ( configurationObject ) {
 
 
       // use windows tool to build a window
+      /*
       tools.windows.window( "https://github.com" );
       console.log( tools );
       console.log( _config );
 
       // use update tool to check for updates
       tools.update.check();
-
+      */
 
     }; 
+    /** 
+     * 
+     * Start ovni's services after their are load
+     * @method startAllServices
+     *
+     * 
+     * 
+     */  
+    var startAllServices = function () {
+      // start services after loading
+
+      //  loop
+      for( var property in services ){
+         services [ property ].start();
+      }
+    }
 
     // when the electron library it's ready executes
       app.on( 'ready', function () { 
+
+    
 
      //  the main process
      // -------------------------------- //
     
 
   // start loading tools when the library is ready
-  tools = loader.path( './tools', loadtoolsOk );
+ // tools = loader.path( './tools', loadtoolsOk );
+  services = loader.path( './services', startAllServices );
+
   
     
        

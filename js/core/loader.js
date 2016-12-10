@@ -48,6 +48,7 @@ module.exports = function loader () {
        * 
        */
     var _filer = require( 'fs' );
+   
     var _path;
     var _userpath;
     var _loadedObject = { };
