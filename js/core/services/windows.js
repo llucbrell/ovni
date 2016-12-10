@@ -39,20 +39,27 @@
  *
  *
  */
-module.exports = function mainWindow () {
+module.exports = function windows () {
   
      /** 
        * 
        * 
        * @require electron - electron API.
-       * @require electron.app - module to control application life activity
-       * 
+       * @require electro.BrowserWindow - module to create windows
+       * @require ovni.json - configuration file
        * 
        */
 
   var _electronAPI = require( 'electron' );
   var _BrowserWindow = _electronAPI.BrowserWindow;
+     /** 
+       * @namespace {javascript-object} _windows - all the windows active in the sesion  
+       */
+  var _windowStack = {};
   
+
+
+
     /** 
      * 
      * Build a window using the electron-lib.
@@ -66,11 +73,18 @@ module.exports = function mainWindow () {
 	 // Create the browser window.
      var _window = new _BrowserWindow( _config ); 
 
+
+ // for a more native feel less browser load view experience
+     _window.once('ready-to-show', function () {
+        _window.show();
+      });
+
      // the url of the view
       _window.loadURL( _url );
-	 
+
 	  // Open the DevTools for debuggin purposes.
 	 _window.webContents.openDevTools();
+
 
 	  // Emitted when the window is closed.
 	  _window.on( 'closed', function () {
@@ -80,8 +94,12 @@ module.exports = function mainWindow () {
 	  _window = null;
 
 	  });
-     }
 
+    // store the window on the namespace _windowStack 
+     _windowStack[ _config.ovnid ] = _window;
+
+  }
+ 
 
 
 
@@ -91,7 +109,7 @@ module.exports = function mainWindow () {
     /** 
      * 
      * Open the ovni's main window
-     * @method mainWindow.start
+     * @method windows.start
      *
      * 
      * 
@@ -106,25 +124,113 @@ module.exports = function mainWindow () {
 		   */
 		   var _config= {
                     // the main window charcateristics
-		   							width:800,
+		   							  width:800,
 		   						    height:600,
-		   						    fullscreen: true,
 		   						    autoHideMenuBar: true,
-		   						    webPreferences: { devTools: true }
+                      show: false,
+                      fullscreen: true,
+		   						    webPreferences: { devTools: false },
+                      ovnid: 00
 
 		   							};
 
-		   var _url= 'file://' +  '${__dirname}/views/main.html';
+		   var _url= 'file://${__dirname}/views/main.html';
 
 
-     	   var main= createWindow( _url, _config ); 
+     	 var main= createWindow( _url, _config ); 
+     	// return main;
 
-     	return main;
+     	},
 
-     	}
+    /** 
+     * 
+     * Create a new window
+     * @method windows.create
+     *
+     * 
+     * 
+     */
+     create:function (url, config ) {      
+       /**
+       * 
+       * @namespace {javascript-object} config - javascript object with the basic window characteristics
+       * @default {width:800, height:600, fullscreen: true, autoHideMenuBar: true, webPreferences: {devTools: true (for debuggin purposes)}
+       * @namespace {string} url - the view for rendering on the borwser
+       * @default `file://${__dirname}/app/index.html`
+       *
+       */
+       var _config= config || {
+
+                      width:800,
+                      height:600,
+                      fullscreen: true,
+                      autoHideMenuBar: true,
+                      webPreferences: { devTools: true },
+                      ovnid: undefined
+
+                    };
+
+       var _url= url || 'file://' + $ + '{__dirname}/app/index.html';
 
 
-     };
+       var main= createWindow( _url, _config ); 
+
+      return main;
+
+      },
+
+    /** 
+     * 
+     * Obtain the windows objects
+     * @method windows.read
+     * @return {javascript-object} - the windows stack
+     * 
+     * 
+     */
+      read:function (){
+          return _windowStack;
+      },
+    /** 
+     * 
+     * Update the windws stack
+     * @method windows.update
+     * @param windowId { string } - the id
+     * @param action { string } - the action to update the window. Possible actions are - close, minimize
+     * 
+     */
+      update:function ( windowId, action ){
+           if ( action === 'hide' )  _windowStack [ windowId ].hide();
+           
+           if ( action === 'show' ) _windowStack [ windowId ].show();
+
+           if ( action === 'minimize' ) _windowStack [ windowId ].minimize();
+
+           if ( action === 'restore' ) _windowStack [ windowId ].restore();
+           
+           if ( action === 'close' ) {
+               _windowStack [ windowId ].close();
+               delete _windowStack[ windowId ];
+           }
+           
+      },
+    /** 
+     * 
+     * Update the windws stack
+     * @method windows.update
+     * 
+     */
+      delete:function ( windowId ){
+
+        _windowStack [ windowId ].destroy();
+        delete _windowStack[ windowId ];
+          
+      }
+
+
+
+
+
+    };
 
      
 

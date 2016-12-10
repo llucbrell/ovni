@@ -123,8 +123,8 @@ module.exports = function core ( configurationObject ) {
    * @default namespaceDefaultValue
    *
    */
-   var _config = configurationObject || {};
-
+ var _config = configurationObject || {};
+console.log( _config );
 
    return {
     /** 
@@ -142,30 +142,9 @@ module.exports = function core ( configurationObject ) {
     
 
     // define de tools container befor running the loader
-    var tools, services;
-    /** 
-     * 
-     * Run after correct tools loads
-     * @method loadtoolsOk
-     *
-     * 
-     * 
-     */   
-    var loadtoolsOk = function () {
-      // define the actions after tools loading 
-
-
-      // use windows tool to build a window
-      /*
-      tools.windows.window( "https://github.com" );
-      console.log( tools );
-      console.log( _config );
-
-      // use update tool to check for updates
-      tools.update.check();
-      */
-
-    }; 
+    var services;
+  
+  
     /** 
      * 
      * Start ovni's services after their are load
@@ -177,11 +156,37 @@ module.exports = function core ( configurationObject ) {
     var startAllServices = function () {
       // start services after loading
 
-      //  loop
-      for( var property in services ){
-         services [ property ].start();
+//  loop
+       for ( var property in services ) {
+
+        try {
+            // try to execut all the services if exist the start method
+            if ( services[property].start ) services [ property ].start();
+            else console.log( "ups");
+        }
+        catch (err) {
+          /** 
+           * 
+           * @todo Implement errorHandler and windowError
+           */
+          // handle the error
+          
+          if ( services.errorHandler ) {
+            services.errorHandler( err );
+            services.mainWindow.errorWindow( err );
+            console.log ( err );
+
+          }
+          else console.log ("ups"+ err );
+
+        }
+      
+     
       }
-    }
+      console.log(services.windows.read())
+      //services.windows.update( '0' , 'close' );
+
+    };
 
     // when the electron library it's ready executes
       app.on( 'ready', function () { 
@@ -193,7 +198,6 @@ module.exports = function core ( configurationObject ) {
     
 
   // start loading tools when the library is ready
-  tools = loader.path( './tools', loadtoolsOk );
   services = loader.path( './services', startAllServices );
 
   
