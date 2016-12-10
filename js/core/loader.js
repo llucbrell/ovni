@@ -49,23 +49,37 @@ module.exports = function loader () {
        */
     var _filer = require( 'fs' );
    
-    var _path;
-    var _userpath;
-    var _loadedObject = { };
-    var _pathFiles = [ ];
-  
- // function that requires all the js-files and  store them into a javascript object  
-    function myLoad ( callback ) {
-        _pathFiles.forEach( function ( element ) {
-          console.log( "loaded " + element );
-            _loadedObject[ element.substring( 0, element.length-3 ) ] = require( _path + '/' + element )();
-      });
-         callback();
-    }
-   // Stores all the file paths inside an array.   
-  function leedir ( callback ) {
    
-  _filer.readdir( _path,  function ( err, files ) {
+  
+
+
+   return {
+    /** 
+     * 
+     * Method that makes all the hard work, returns an object with all the closure-modules from an specified folder. 
+     * @method path 
+     * @param userPath - the folder's path
+     * @param callback {function}
+     * @return {javascript-object} a matriusca with all the modules loaded into.
+     */
+     path:function ( userPath, callback ) { 
+
+
+    var _path;
+    var _loadedObject = { };
+    var _pathFiles = [ ];     
+       /**
+       * 
+       * @namespace {string} userPath - the folder's path for the modules to load
+       * @todo Implement error handling
+       */
+       if ( userPath[ 0 ] === '.' ) userPath = userPath.substring( 1, userPath.length );
+            _path = __dirname + userPath;  
+        // fullfill the _loadedObject
+   
+   // Stores all the file paths inside an array.   
+
+    _filer.readdir( _path,  function ( err, files ) {
       if ( err ) {
          // retuns an error object
         var error = { msg: "Loader can't read folder", data: err };
@@ -78,37 +92,21 @@ module.exports = function loader () {
         //process.stdout.write(" "+element);        
         });
       // call for loading
-        myLoad( callback );
-      }
-   });      
- }   
 
+     // function that requires all the js-files and  store them into a javascript object  
 
-
-   return {
-    /** 
-     * 
-     * Method that makes all the hard work, returns an object with all the closure-modules from an specified folder. 
-     * @method path 
-     * @param userPath - the folder's path
-     * @param callback {function}
-     * @return {javascript-object} a matriusca with all the modules loaded into.
-     */
-     path:function ( userPath, callback ) {      
-       /**
-       * 
-       * @namespace {string} userPath - the folder's path for the modules to load
-       * @todo Implement error handling
-       */
-       _userpath = userPath;
-       if ( userPath[ 0 ] === '.' ) userPath = userPath.substring( 1, userPath.length );
-            _path = __dirname + userPath;  
-        // fullfill the _loadedObject
-        leedir(  callback );
-        // return that object
+        _pathFiles.forEach( function ( element ) {
+          console.log( "loaded " + element );
+            _loadedObject[ element.substring( 0, element.length-3 ) ] = require( _path + '/' + element )();
+      });
         
-
-        return _loadedObject;
+         callback();
+      }
+   }); 
+        // return object
+        
+      return _loadedObject;
+       
 
       }
 

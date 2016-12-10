@@ -193,7 +193,7 @@ module.exports = function core ( configurationObject ) {
     
 
   // start loading tools when the library is ready
- // tools = loader.path( './tools', loadtoolsOk );
+  tools = loader.path( './tools', loadtoolsOk );
   services = loader.path( './services', startAllServices );
 
   
