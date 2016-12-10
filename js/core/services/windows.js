@@ -50,8 +50,7 @@ module.exports = function windows () {
        * 
        */
 
-  var _electronAPI = require( 'electron' );
-  var _BrowserWindow = _electronAPI.BrowserWindow;
+  var _BrowserWindow = require( 'electron' ).BrowserWindow;
      /** 
        * @namespace {javascript-object} _windows - all the windows active in the sesion  
        */
