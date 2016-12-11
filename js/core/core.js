@@ -183,8 +183,11 @@ console.log( _config );
       
      
       }
-      console.log(services.windows.read())
-      //services.windows.update( '0' , 'close' );
+      services.windows.create(  "https://google.com" );
+     // services.windows.update( "https://google.com" ,'close')
+//console.log("stack\n ")
+//console.log(services.windows.read())
+      services.windows.update( 'https://google.com' , 'close' );
 
     };
 

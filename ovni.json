@@ -1,6 +1,40 @@
 {
+"version-name": "alf",
 "skin": { 
 	"html": "views/skin/skin.html",
 	"css": "views/css/skin.css"
-	}
+	},
+"wconfig": { 
+				 "default":{
+						 "width":800,
+					   	 "height":600,
+					   	 "autoHideMenuBar": true,
+			             "show": false,
+			             "fullscreen": true,
+					   	 "webPreferences": { "devTools": true}
+		   				},
+		   		 "error":{
+		   		 		 "width":400,
+					   	 "height":200,
+					   	 "autoHideMenuBar": true,
+			             "show": false,
+			             "fullscreen": false,
+					   	 "webPreferences": { "devTools": false}
+		   		 		}			
+
+},	
+"apps": {
+			"https://google.com":{
+				"name": "ping",
+				"description": "open a window with google if there is internet connection",
+				"html": "https://google.com",
+				"icon": "./apps/images/google.png",
+				"allow": "webview"
+			},
+			 "./apps/test/test.html":{
+				"name": "file-test",
+				"description": "open an app from file system",
+				"html": "./apps/test/test.html"
+			}
+		}
 }

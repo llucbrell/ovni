@@ -1,8 +1,8 @@
  /* 
 
 
- * NAME: mainWindow
- * in: main-window.js 
+ * NAME: windows
+ * in: windows.js 
   _______________________
 
                                                   MH   ._
@@ -95,6 +95,7 @@ module.exports = function windows () {
 	  });
 
     // store the window on the namespace _windowStack 
+
      _windowStack[ _config.ovni.id ] = _window;
 
   }
@@ -122,22 +123,13 @@ module.exports = function windows () {
 		   * @namespace {string} url - the view for rendering on the borwser
 		   *
 		   */
-		   var _config= {
-                    // the main window charcateristics
-		   							  width:800,
-		   						    height:600,
-		   						    autoHideMenuBar: true,
-                      show: false,
-                      fullscreen: true,
-		   						    webPreferences: { devTools: true},
-                      ovni:{ id: "ovni", name:"main" }
-		   							};
+		   var _config = ovniJSON.wconfig.default; // get the windows characteristics
+       _config.ovni =  { id: "ovni-main", name:"main" };
+
 
         // set the default view or skin            
        if ( !ovniJSON.skin ) _url= 'file://${' + __dirname +'}/../../../views/main.html';
        else _url = 'file://${'+ __dirname + '}/../../../' + ovniJSON.skin.html;
-
-       console.log(_url)
 
      	 var main= createWindow( _url, _config ); 
 
@@ -151,7 +143,7 @@ module.exports = function windows () {
      * 
      * 
      */
-     create:function ( config ) {      
+     create:function ( url, type ) {      
        /**
        * 
        * @namespace {javascript-object} config - javascript object with the basic window characteristics
@@ -160,20 +152,22 @@ module.exports = function windows () {
        * @default `file://${__dirname}/app/index.html`
        *
        */
-       var _config= config || {
+       var _config;
 
-                      width:800,
-                      height:600,
-                      fullscreen: true,
-                      autoHideMenuBar: true,
-                      webPreferences: { devTools: true },
-                      ovni: {id:"anonimous", name:"anonimous"}
+       if( !type ) _config =  ovniJSON.wconfig.default;
+       else _config =  ovniJSON.wconfig[ type ]; // get the windows characteristics
 
-                    };
-
-     // set the default view or skin            
-       if ( !ovniJSON.skin ) _url=  url ||  'file://${' + __dirname +'}/../../../views/main.html';
-       else _url = url || 'file://${' + __dirname + '}/../../../' + ovniJSON.skin.html;
+    /** 
+     * @todo implement not url error 
+     */
+     // set the ovni's object 
+       if ( !url ) _config.ovni = { id:"anonimous", name:"anonimous"}; 
+       else _config.ovni =  { id: url  , name: ovniJSON.apps[ url ].name}; // unic identifier
+    /** 
+     * @todo implement mixt window mode
+     */
+       if( url.substring(0,4)=== "http" )_url=  url; 
+       else _url = 'file://${' + __dirname + '}/../../../' + _config.ovni.id;
 
 
        var main= createWindow( _url, _config ); 
