@@ -50,7 +50,7 @@ module.exports = function windows () {
        * 
        */
   var _BrowserWindow = require( 'electron' ).BrowserWindow;
-  var ovniJSON = require('../../../ovni.json')
+  var ovniJSON = require('../../../ovni.json');
      /** 
        * @namespace {javascript-object} _windows - all the windows active in the sesion  
        */
@@ -95,7 +95,7 @@ module.exports = function windows () {
 	  });
 
     // store the window on the namespace _windowStack 
-     _windowStack[ _config.ovnid ] = _window;
+     _windowStack[ _config.ovni.id ] = _window;
 
   }
  
@@ -130,7 +130,7 @@ module.exports = function windows () {
                       show: false,
                       fullscreen: true,
 		   						    webPreferences: { devTools: true},
-                      ovnid: 00
+                      ovni:{ id: "ovni", name:"main" }
 		   							};
 
         // set the default view or skin            
@@ -151,7 +151,7 @@ module.exports = function windows () {
      * 
      * 
      */
-     create:function (url, config ) {      
+     create:function ( config ) {      
        /**
        * 
        * @namespace {javascript-object} config - javascript object with the basic window characteristics
@@ -167,7 +167,7 @@ module.exports = function windows () {
                       fullscreen: true,
                       autoHideMenuBar: true,
                       webPreferences: { devTools: true },
-                      ovnid: undefined
+                      ovni: {id:"anonimous", name:"anonimous"}
 
                     };
 
