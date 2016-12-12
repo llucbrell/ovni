@@ -115,6 +115,8 @@ module.exports = function core ( configurationObject ) {
   var electronAPI = require( 'electron' );
   var app = electronAPI.app;
   var loader = require( './loader.js' )();
+
+  // define de tools container befor running the loader
   
 
    /**
@@ -139,12 +141,21 @@ console.log( _config );
 
       //  functions definitions
      // -------------------------------- //
-    
 
-    // define de tools container befor running the loader
-    var services;
-  
-  
+    /** 
+     * 
+     * Start ovni's services comunication after 
+     * @method startComunication
+     *
+     * 
+     * 
+     */ 
+    function startComunication () {
+
+      // when all it's ready allow comunication between services
+        for ( var property in services ) { if( services[property].startCom ){ services[property].startCom()} }
+
+    }
     /** 
      * 
      * Start ovni's services after their are load
@@ -162,7 +173,7 @@ console.log( _config );
         try {
             // try to execut all the services if exist the start method
             if ( services[property].start && services[property] !== 'views') services [ property ].start();
-            else console.log( "ups");
+            else console.log( "ups" );
         }
         catch (err) {
           /** 
@@ -183,11 +194,8 @@ console.log( _config );
       
      
       }
-      services.windows.create(  "https://google.com" );
-     // services.windows.update( "https://google.com" ,'close')
-//console.log("stack\n ")
-//console.log(services.windows.read())
-      services.windows.update( 'https://google.com' , 'close' );
+
+      comInterfaces = loader.path( './com-interfaces', startComunication );
 
     };
 
@@ -223,7 +231,70 @@ console.log( _config );
     }); 
 
 
-    }
+    },
+      coreCom:
+      {
+          create:function( serviceName, arrayParams ){
+            if( comInterfaces[serviceName + "Interface"].create ){ 
+            var newArrayParams = comInterfaces[serviceName + "Interface"].create( arrayParams );
+            services[serviceName].create( newArrayParams );
+            }
+            else {
+              var message = "this service doesn't listen to create comunication";
+              console.log("this service doesn't listen to create comunication");
+              return message;
+            }
+
+          },
+
+          read:function( serviceName, arrayParams ){
+            if( comInterfaces[serviceName + "Interface"].read ){ 
+            var newArrayParams = comInterfaces[serviceName + "Interface"].read( arrayParams );
+            services[serviceName].read( newArrayParams );
+            }
+          else {
+              var message = "this service doesn't listen to read comunication";
+              console.log("this service doesn't listen to read comunication");
+              return message;
+            }
+
+          },
+
+          update:function( serviceName , arrayParams ){
+            if( comInterfaces[serviceName + "Interface"].update ){ 
+            var newArrayParams = comInterfaces[serviceName + "Interface"].update( arrayParams );
+            services[serviceName].update( newArrayParams );
+            }
+          else {
+              var message = "this service doesn't listen to update comunication";
+              console.log("this service doesn't listen to update comunication");
+              return message;
+            }
+
+          },
+
+          delete:function( serviceName , arrayParams ){
+            if( comInterfaces[serviceName + "Interface"].delete ){ 
+            var newArrayParams = comInterfaces[serviceName + "Interface"].delete( arrayParams );
+            services[serviceName].delete( newArrayParams );
+            }
+          else {
+              var message = "this service doesn't listen to delete comunication";
+              console.log("this service doesn't listen to delete comunication");
+              return message;
+            }
+
+          }
+
+    }  
+
+
+
+    
+
+
+
+
   };
 }; 
 

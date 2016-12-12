@@ -117,16 +117,23 @@
      * @file init.js - iniciate the app
      * @require core - module that manages the core of the app
      */
-     var core= require( './js/core/core.js' )();
+     var core = require( './js/core/core.js' )();
    
-    // load the config file
+    // if there is the configuration ovni.JSON file
+    // iniciate the app
+    try{
+       var configObj = require( './ovni.json' );
+       //check for all configurations required in ovni.json file
+       core.start();
+    }
+    catch( err ){
+      console.log( 'It happen a critical error, ovni can\'t start without a correct ovni.json file\n' + err  );
+    }
+   
 
-   // generate configuration object
 
 
-
-  // iniciate the app
-     core.start(); 
+ 
 
   
 

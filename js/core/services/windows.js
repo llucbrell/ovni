@@ -106,6 +106,9 @@ module.exports = function windows () {
 
 
    return {
+    init: function (){
+      console.log(" Ready to work ")
+    },
     /** 
      * 
      * Open the ovni's main window
@@ -143,7 +146,10 @@ module.exports = function windows () {
      * 
      * 
      */
-     create:function ( url, type ) {      
+     create:function ( array ) { 
+      console.log(array[0]);
+     var url = array[0];
+     var type = array[1];     
        /**
        * 
        * @namespace {javascript-object} config - javascript object with the basic window characteristics
@@ -154,14 +160,16 @@ module.exports = function windows () {
        */
        var _config;
 
-       if( !type ) _config =  ovniJSON.wconfig.default;
+       if( type === undefined ) _config =  ovniJSON.wconfig.default;
        else _config =  ovniJSON.wconfig[ type ]; // get the windows characteristics
 
     /** 
      * @todo implement not url error 
      */
+     console.log( url )
+     console.log( _config)
      // set the ovni's object 
-       if ( !url ) _config.ovni = { id:"anonimous", name:"anonimous"}; 
+       if ( url !== undefined ) _config.ovni = { id:"anonimous", name:"anonimous"}; 
        else _config.ovni =  { id: url  , name: ovniJSON.apps[ url ].name}; // unic identifier
     /** 
      * @todo implement mixt window mode
@@ -182,7 +190,8 @@ module.exports = function windows () {
      * 
      * 
      */
-      read:function (){
+      read:function ( array ){
+        // ignore array param -it's a convention to easy manipulate params between modules
           return _windowStack;
       },
     /** 
@@ -193,7 +202,9 @@ module.exports = function windows () {
      * @param action { string } - the action to update the window. Possible actions are - close, minimize
      * 
      */
-      update:function ( windowId, action ){
+      update:function ( array ){
+        var windowId = array[0];
+        var action = array[1];
            if ( action === 'hide' )  _windowStack [ windowId ].hide();
            
            if ( action === 'show' ) _windowStack [ windowId ].show();
@@ -215,7 +226,7 @@ module.exports = function windows () {
      * 
      */
       delete:function ( windowId ){
-
+        var windowId= array[0];
         _windowStack [ windowId ].destroy();
         delete _windowStack[ windowId ];
           

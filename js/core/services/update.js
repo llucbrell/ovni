@@ -48,8 +48,8 @@
      var latest = require( 'latest' );
      var pkg = require( '../../../package.json' );
      var compare = require( 'compare-semver' ); 
- 
-
+     var coreCom= require('../core.js')().coreCom; 
+     var mustUpdate;
 
   return {
   /** 
@@ -79,8 +79,33 @@
       // compare the versions
       var maxSemver = compare.max( versions );
       //call the core if we need to update the app
-      if ( maxSemver === lastVersion ) console.log( "update please" );
+      if ( maxSemver === lastVersion ) 
+        {mustUpdate = true; 
+        }
       });
+    },
+    startCom:function(){
+
+ 
+      
+      function repeat() {
+       if( mustUpdate !== undefined ){
+ 
+
+         console.log('mustUpdate'+ mustUpdate)
+      if( mustUpdate === true ){
+
+      coreCom.create( 'windows', ['http://github.com', 'error']);
+      
+      }
+      clearInterval(intervalId);
+    }
+            
+}
+
+var intervalId = setInterval(repeat, 10000);
+
+     
     }  
 
 
