@@ -107,7 +107,7 @@ module.exports = function windows () {
 
    return {
     init: function (){
-      console.log(" Ready to work ")
+      console.log("Windows -- Ready to work ")
     },
     /** 
      * 
@@ -147,7 +147,7 @@ module.exports = function windows () {
      * 
      */
      create:function ( array ) { 
-      console.log(array[0]);
+     // console.log(array[0]);
      var url = array[0];
      var type = array[1];     
        /**
@@ -166,8 +166,8 @@ module.exports = function windows () {
     /** 
      * @todo implement not url error 
      */
-     console.log( url )
-     console.log( _config)
+    // console.log( url )
+    // console.log( _config)
      // set the ovni's object 
        if ( url !== undefined ) _config.ovni = { id:"anonimous", name:"anonimous"}; 
        else _config.ovni =  { id: url  , name: ovniJSON.apps[ url ].name}; // unic identifier

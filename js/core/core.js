@@ -126,7 +126,7 @@ module.exports = function core ( configurationObject ) {
    *
    */
  var _config = configurationObject || {};
-console.log( _config );
+//console.log( _config );
 
    return {
     /** 

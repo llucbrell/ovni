@@ -34,7 +34,7 @@
  
 /** 
  * 
- * Module that update app version
+ * Module that manages an update app version when ovni starts
  * @module updater
  *
  *
@@ -58,7 +58,6 @@
      * @method check
      *
      * 
-     * @return true or false if there is an update
      */
      start:function () {
      // stores the last version
@@ -84,26 +83,45 @@
         }
       });
     },
-    startCom:function(){
+     /** 
+     * Start the comunication with other parts of core to inicialize the update
+     * @method startCom
+     *
+     * 
+     */
+     startCom:function(){
 
- 
+        // run the script to actualize the OS
+         var install = function install(){
+            console.log("Installation inicialized");
+         }
+         var reset = function reset(){
+            console.log('reset');
+         }
       
       function repeat() {
-       if( mustUpdate !== undefined ){
- 
+        // listen eery second til http request is finished
+       if( mustUpdate !== undefined ){ 
+            // if there is a new release
+            if( mustUpdate === true ){
+            //console.log(__dirname + '../../../assets/icons/info.png');
+             
+             // builds a notification to display to the user
+             coreCom.create ( 'notify', ['Update Version',
+                                          'new version of Ovni avaliable', 
+                                          'info', 
+                                          10000, 
+                                          ['Install', install , 'Reset' , reset ] ]);
 
-         console.log('mustUpdate'+ mustUpdate)
-      if( mustUpdate === true ){
-
-      coreCom.create( 'windows', ['http://github.com', 'error']);
-      
-      }
-      clearInterval(intervalId);
-    }
             
-}
-
-var intervalId = setInterval(repeat, 10000);
+            }
+            // when the request is finished, clean the setInterval
+        clearInterval(intervalId);
+          }
+                  
+        }
+        // the interval for checking when the http request is finished
+      var intervalId = setInterval(repeat, 10000);
 
      
     }  
